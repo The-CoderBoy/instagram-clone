@@ -71,6 +71,7 @@ class AuthMethods {
     } catch (err) {
       return err.toString();
     }
+    print(res);
     return res;
   }
 
@@ -79,6 +80,7 @@ class AuthMethods {
 
     DocumentSnapshot snap =
         await _firestore.collection('users').doc(currentUser.uid).get();
+    print(model.User.fromSnap(snap));
     return model.User.fromSnap(snap);
   }
 }

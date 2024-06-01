@@ -19,13 +19,7 @@ class ResponsiveLayout extends StatefulWidget {
 class _ResponsiveLayoutState extends State<ResponsiveLayout> {
   @override
   void initState() {
-    addData();
     super.initState();
-  }
-
-  addData() async {
-    UserProvider _userProvider = Provider.of(context, listen: false);
-    await _userProvider.refreshUser();
   }
 
   @override
