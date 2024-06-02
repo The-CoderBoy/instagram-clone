@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_flutter/provider/user_provider.dart';
 import 'package:instagram_flutter/utils/colors.dart';
+import 'package:instagram_flutter/utils/globle_variables.dart';
 import 'package:provider/provider.dart';
 import '../models/user.dart' as model;
 
@@ -72,23 +73,7 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
         controller: pageController,
         // onPageChanged: onPageChanged,
         physics: NeverScrollableScrollPhysics(),
-        children: [
-          Center(
-            child: Text("one"),
-          ),
-          Center(
-            child: Text("Two"),
-          ),
-          Center(
-            child: Text("Three"),
-          ),
-          Center(
-            child: Text("Four"),
-          ),
-          Center(
-            child: Text("Five"),
-          ),
-        ],
+        children: homeScreenItems,
       ),
       bottomNavigationBar: CupertinoTabBar(
         currentIndex: _page,
