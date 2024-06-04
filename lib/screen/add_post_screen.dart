@@ -17,6 +17,7 @@ class AddPostScreen extends StatefulWidget {
 
 class _AddPostScreenState extends State<AddPostScreen> {
   Uint8List? _file;
+  bool _isLoading = false;
 
   _selectImage(BuildContext context) async {
     return showDialog(
@@ -63,18 +64,31 @@ class _AddPostScreenState extends State<AddPostScreen> {
     final TextEditingController _descriptionController =
         TextEditingController();
 
+    void clearImage() {
+      setState(() {
+        _file = null;
+      });
+    }
+
     void postImage(String uid, String username, String profImage) async {
+      setState(() {
+        _isLoading = true;
+      });
       try {
         String res = await FirestoreMethods().uploadPost(
             _descriptionController.text, _file!, uid, username, profImage);
         if (res == "Success") {
           showSnackBar(context, "Posted");
+          clearImage();
         } else {
           showSnackBar(context, res);
         }
       } catch (err) {
         showSnackBar(context, err.toString());
       }
+      setState(() {
+        _isLoading = false;
+      });
     }
 
     return _file == null
@@ -88,7 +102,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
             appBar: AppBar(
               backgroundColor: mobileBackgroundColor,
               leading: IconButton(
-                onPressed: () {},
+                onPressed: clearImage,
                 icon: const Icon(Icons.arrow_back),
               ),
               title: const Text('Post to'),
@@ -112,6 +126,12 @@ class _AddPostScreenState extends State<AddPostScreen> {
             ),
             body: Column(
               children: [
+                _isLoading
+                    ? const LinearProgressIndicator()
+                    : const Padding(
+                        padding: EdgeInsets.only(top: 0),
+                      ),
+                const Divider(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.start,
